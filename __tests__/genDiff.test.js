@@ -1,8 +1,9 @@
 import { expect, test } from '@jest/globals';
 import { promises as fsp } from 'fs';
+import * as path from 'path';
 import genDiff from '../src/index.js';
 
-const getFixturePath = (fixtureFileName) => `${process.cwd()}/__fixtures__/${fixtureFileName}`;
+const getFixturePath = (fixtureFileName) => path.resolve(process.cwd(), `__fixtures__/${fixtureFileName}`);
 
 test('Empty JSONs diff generation', async () => {
   const json1 = {};
