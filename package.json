@@ -20,7 +20,8 @@
   "homepage": "https://github.com/AidanMegabyte/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^7.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "printf": "^0.6.0"
   },
   "devDependencies": {
     "@jest/globals": "^26.6.2",
