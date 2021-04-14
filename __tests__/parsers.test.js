@@ -18,3 +18,14 @@ test('Checking JSON file parsing', () => {
   expect(objActual).toEqual(objExpected);
   expect(spy.mock.calls[0][1]).toEqual('json');
 });
+
+test('Checking YAML file parsing', () => {
+  const spy = jest.spyOn(_, 'get');
+  const objExpected = { ahalay: 'mahalay' };
+  let objActual = parseFile(getFixturePath('parsers/yaml-file.yaml'));
+  expect(objActual).toEqual(objExpected);
+  objActual = parseFile(getFixturePath('parsers/yml-file.yml'));
+  expect(objActual).toEqual(objExpected);
+  expect(spy.mock.calls[0][1]).toEqual('yaml');
+  expect(spy.mock.calls[1][1]).toEqual('yml');
+});

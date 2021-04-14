@@ -5,3 +5,5 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/270bf390f9a560cdcda0/test_coverage)](https://codeclimate.com/github/AidanMegabyte/frontend-project-lvl2/test_coverage)
 ### Asciicast gendiff:
 [![asciicast](https://asciinema.org/a/Pn6MMdXCgxnEN0ltywEMKBFG8.svg)](https://asciinema.org/a/Pn6MMdXCgxnEN0ltywEMKBFG8)
+### Asciicast gendiff yaml:
+[![asciicast](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U.svg)](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U)

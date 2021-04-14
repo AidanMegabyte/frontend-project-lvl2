@@ -1,9 +1,14 @@
 import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
 import * as path from 'path';
 import _ from 'lodash';
 
+const parseYaml = (fileContent) => yaml.load(fileContent);
+
 const parsersByFileType = {
   json: JSON.parse,
+  yml: parseYaml,
+  yaml: parseYaml,
 };
 
 export default function parseFile(filePath) {

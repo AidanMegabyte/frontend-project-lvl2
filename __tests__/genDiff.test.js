@@ -18,3 +18,19 @@ test('Plain JSONs diff generation', async () => {
   const diffActual = genDiff(json1Path, json2Path);
   expect(diffActual).toEqual(diffExpected);
 });
+
+test('Empty YAMLs diff generation', async () => {
+  const yaml1Path = getFixturePath('genDiff/yaml/empty/1.yaml');
+  const yaml2Path = getFixturePath('genDiff/yaml/empty/2.yaml');
+  const diffExpected = (await fsp.readFile(getFixturePath('genDiff/yaml/empty/diff.txt'), 'utf-8')).slice(0, -1);
+  const diffActual = genDiff(yaml1Path, yaml2Path);
+  expect(diffActual).toEqual(diffExpected);
+});
+
+test('Plain YAMLs diff generation', async () => {
+  const yaml1Path = getFixturePath('genDiff/yaml/plain/1.yaml');
+  const yaml2Path = getFixturePath('genDiff/yaml/plain/2.yaml');
+  const diffExpected = (await fsp.readFile(getFixturePath('genDiff/yaml/plain/diff.txt'), 'utf-8')).slice(0, -1);
+  const diffActual = genDiff(yaml1Path, yaml2Path);
+  expect(diffActual).toEqual(diffExpected);
+});
