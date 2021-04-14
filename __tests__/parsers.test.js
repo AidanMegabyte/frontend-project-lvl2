@@ -5,18 +5,19 @@ import parseFile from '../src/parsers.js';
 
 const objExpected = { ahalay: 'mahalay' };
 
-test('Checking file without extension parsing', () => {
+const checkJsonParsing = (fixturePath) => {
   const spy = jest.spyOn(_, 'get');
-  const objActual = parseFile(getFixturePath('parsers/file-without-ext'));
+  const objActual = parseFile(getFixturePath(fixturePath));
   expect(objActual).toEqual(objExpected);
   expect(spy.mock.calls[0][1]).toEqual('json');
+};
+
+test('Checking file without extension parsing', () => {
+  checkJsonParsing('parsers/file-without-ext');
 });
 
 test('Checking JSON file parsing', () => {
-  const spy = jest.spyOn(_, 'get');
-  const objActual = parseFile(getFixturePath('parsers/json-file.json'));
-  expect(objActual).toEqual(objExpected);
-  expect(spy.mock.calls[0][1]).toEqual('json');
+  checkJsonParsing('parsers/json-file.json');
 });
 
 test('Checking YAML file parsing', () => {
