@@ -1,9 +1,10 @@
 import _ from 'lodash';
-
-const modifiedNone = 0;
-const modifiedAdded = 1;
-const modifiedDeleted = 2;
-const modifiedChanged = 3;
+import {
+  modifiedNone,
+  modifiedAdded,
+  modifiedDeleted,
+  modifiedChanged,
+} from './common.js';
 
 const formatAsStylish = (diff) => {
   const result = [];
@@ -34,12 +35,6 @@ const formatters = {
   stylish: formatAsStylish,
 };
 
-const formatDiff = (diff, formatAs = 'stylish') => _.get(formatters, formatAs)(diff);
-
-export {
-  modifiedNone,
-  modifiedAdded,
-  modifiedDeleted,
-  modifiedChanged,
-  formatDiff,
-};
+export default function formatDiff(diff, formatAs = 'stylish') {
+  return _.get(formatters, formatAs)(diff);
+}
