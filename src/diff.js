@@ -19,10 +19,13 @@ export default function calcDiff(obj1, obj2) {
       diff.modified = modifiedDeleted;
     } else if (!has1 && has2) {
       diff.modified = modifiedAdded;
-    } else if (value1 === value2) {
+    } else if (_.isEqual(value1, value2)) {
       diff.modified = modifiedNone;
     } else {
       diff.modified = modifiedChanged;
+      if (_.isObject(value1) && _.isObject(value2)) {
+        diff.childDiff = calcDiff(value1, value2);
+      }
     }
     result.push(diff);
   });

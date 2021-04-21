@@ -9,34 +9,18 @@ const checkDiff = async (filePath1, filePath2, diffPath) => {
   expect(diffActual).toEqual(diffExpected);
 };
 
-test('Empty JSONs diff generation', async () => {
+test('JSONs diff generation', async () => {
   await checkDiff(
-    'genDiff/json/empty/1.json',
-    'genDiff/json/empty/2.json',
-    'genDiff/json/empty/diff.txt',
+    'genDiff/json/1.json',
+    'genDiff/json/2.json',
+    'genDiff/diff.txt',
   );
 });
 
-test('Plain JSONs diff generation', async () => {
+test('YAMLs diff generation', async () => {
   await checkDiff(
-    'genDiff/json/plain/1.json',
-    'genDiff/json/plain/2.json',
-    'genDiff/json/plain/diff.txt',
-  );
-});
-
-test('Empty YAMLs diff generation', async () => {
-  await checkDiff(
-    'genDiff/yaml/empty/1.yaml',
-    'genDiff/yaml/empty/2.yaml',
-    'genDiff/yaml/empty/diff.txt',
-  );
-});
-
-test('Plain YAMLs diff generation', async () => {
-  await checkDiff(
-    'genDiff/yaml/plain/1.yaml',
-    'genDiff/yaml/plain/2.yaml',
-    'genDiff/yaml/plain/diff.txt',
+    'genDiff/yaml/1.yaml',
+    'genDiff/yaml/2.yml',
+    'genDiff/diff.txt',
   );
 });
