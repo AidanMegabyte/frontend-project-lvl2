@@ -74,6 +74,6 @@ const formatters = {
   stylish: formatAsStylish,
 };
 
-export default function formatDiff(diff, formatter = 'stylish') {
-  return _.get(formatters, _.toLower(formatter))(diff);
+export default function formatDiff(diff, format = 'stylish') {
+  return _.get(formatters, _.toLower(format))(diff);
 }
