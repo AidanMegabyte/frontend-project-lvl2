@@ -7,3 +7,5 @@
 [![asciicast](https://asciinema.org/a/Pn6MMdXCgxnEN0ltywEMKBFG8.svg)](https://asciinema.org/a/Pn6MMdXCgxnEN0ltywEMKBFG8)
 ### Asciicast gendiff yaml:
 [![asciicast](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U.svg)](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U)
+### Asciicast gendiff complex:
+[![asciicast](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii.svg)](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii)
