@@ -4,7 +4,7 @@ import {
   modifiedAdded,
   modifiedDeleted,
   modifiedChanged,
-} from './common.js';
+} from '../common.js';
 
 const modifiedChars = {
   [modifiedNone]: ' ',
@@ -60,7 +60,7 @@ const formatDiffItem = (diffItem, padWidth, formatNestedDiff) => {
   return formatValueChange(pad, '?', key, 'unknown \'modified\' type');
 };
 
-const formatAsStylish = (diff) => {
+export default function formatAsStylish(diff) {
   const iter = (curDiff, padWidth) => {
     const result = [];
     const padEnd = ' '.repeat(padWidth - 2);
@@ -68,12 +68,4 @@ const formatAsStylish = (diff) => {
     return ['{', ...result, `${padEnd}}`].join('\n');
   };
   return iter(diff, 2);
-};
-
-const formatters = {
-  stylish: formatAsStylish,
-};
-
-export default function formatDiff(diff, format = 'stylish') {
-  return _.get(formatters, _.toLower(format))(diff);
 }
