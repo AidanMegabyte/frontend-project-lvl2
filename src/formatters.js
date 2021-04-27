@@ -6,49 +6,65 @@ import {
   modifiedChanged,
 } from './common.js';
 
-const formatAsStylish = (diff) => {
-  const formatValue = (value, padWidth) => {
-    if (!_.isObject(value)) {
-      return value;
+const modifiedChars = {
+  [modifiedNone]: ' ',
+  [modifiedAdded]: '+',
+  [modifiedDeleted]: '-',
+};
+
+const modifiedSimple = [
+  modifiedNone,
+  modifiedAdded,
+  modifiedDeleted,
+];
+
+const formatValue = (value, padWidth) => {
+  if (!_.isObject(value)) {
+    return value;
+  }
+  const result = [];
+  const pad = ' '.repeat(padWidth + 2);
+  const padEnd = ' '.repeat(padWidth - 2);
+  const keys = _.keys(value).sort();
+  keys.forEach((key) => {
+    result.push(`${pad}${key}: ${formatValue(value[key], padWidth + 4)}`);
+  });
+  return ['{', ...result, `${padEnd}}`].join('\n');
+};
+
+const formatValueChange = (pad, char, key, value) => `${pad}${char} ${key}: ${value}`;
+
+const formatDiffItem = (diffItem, padWidth, formatNestedDiff) => {
+  const pad = ' '.repeat(padWidth);
+  const {
+    key, modified, valueOld, valueNew,
+  } = diffItem;
+  if (modifiedSimple.includes(modified)) {
+    const modifiedChar = modifiedChars[modified];
+    const value = modified === modifiedAdded ? valueNew : valueOld;
+    const formattedValue = formatValue(value, padWidth + 4);
+    return formatValueChange(pad, modifiedChar, key, formattedValue);
+  }
+  if (modified === modifiedChanged) {
+    if (!_.has(diffItem, 'childDiff')) {
+      const { [modifiedAdded]: addedChar, [modifiedDeleted]: deletedChar } = modifiedChars;
+      const formattedValueOld = formatValue(valueOld, padWidth + 4);
+      const keyValueOld = formatValueChange(pad, deletedChar, key, formattedValueOld);
+      const formattedValueNew = formatValue(valueNew, padWidth + 4);
+      const keyValueNew = formatValueChange(pad, addedChar, key, formattedValueNew);
+      return `${keyValueOld}\n${keyValueNew}`;
     }
-    const result = [];
-    const pad = ' '.repeat(padWidth + 2);
-    const padEnd = ' '.repeat(padWidth - 2);
-    const keys = _.keys(value).sort();
-    keys.forEach((key) => {
-      result.push(`${pad}${key}: ${formatValue(value[key], padWidth + 4)}`);
-    });
-    return ['{', ...result, `${padEnd}}`].join('\n');
-  };
+    const nestedDiff = formatNestedDiff(_.get(diffItem, 'childDiff'), padWidth + 4);
+    return formatValueChange(pad, modifiedChars[modifiedNone], key, nestedDiff);
+  }
+  return formatValueChange(pad, '?', key, 'unknown \'modified\' type');
+};
+
+const formatAsStylish = (diff) => {
   const iter = (curDiff, padWidth) => {
     const result = [];
-    const pad = ' '.repeat(padWidth);
     const padEnd = ' '.repeat(padWidth - 2);
-    curDiff.forEach((d) => {
-      switch (d.modified) {
-        case modifiedNone:
-          result.push(`${pad}  ${d.key}: ${formatValue(d.valueOld, padWidth + 4)}`);
-          break;
-        case modifiedAdded:
-          result.push(`${pad}+ ${d.key}: ${formatValue(d.valueNew, padWidth + 4)}`);
-          break;
-        case modifiedDeleted:
-          result.push(`${pad}- ${d.key}: ${formatValue(d.valueOld, padWidth + 4)}`);
-          break;
-        case modifiedChanged:
-          if (!_.has(d, 'childDiff')) {
-            result.push(`${pad}- ${d.key}: ${formatValue(d.valueOld, padWidth + 4)}`);
-            result.push(`${pad}+ ${d.key}: ${formatValue(d.valueNew, padWidth + 4)}`);
-          } else {
-            const childDiff = iter(_.get(d, 'childDiff'), padWidth + 4);
-            result.push(`${pad}  ${d.key}: ${childDiff}`);
-          }
-          break;
-        default:
-          result.push(`  ? ${d.key}`);
-          break;
-      }
-    });
+    curDiff.forEach((d) => result.push(formatDiffItem(d, padWidth, iter)));
     return ['{', ...result, `${padEnd}}`].join('\n');
   };
   return iter(diff, 2);
