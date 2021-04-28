@@ -9,3 +9,5 @@
 [![asciicast](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U.svg)](https://asciinema.org/a/3417ITrRi7pon3HJ3UOMoWf0U)
 ### Asciicast gendiff complex:
 [![asciicast](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii.svg)](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii)
+### Asciicast gendiff plain formatter:
+[![asciicast](https://asciinema.org/a/5GJfMehk4aEM09JSuRenfMFeh.svg)](https://asciinema.org/a/5GJfMehk4aEM09JSuRenfMFeh)
