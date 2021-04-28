@@ -11,3 +11,5 @@
 [![asciicast](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii.svg)](https://asciinema.org/a/Mze2Q0EeFAWqQEFGqzuNNP2Ii)
 ### Asciicast gendiff plain formatter:
 [![asciicast](https://asciinema.org/a/5GJfMehk4aEM09JSuRenfMFeh.svg)](https://asciinema.org/a/5GJfMehk4aEM09JSuRenfMFeh)
+### Asciicast gendiff JSON formatter:
+[![asciicast](https://asciinema.org/a/JDRcvumHV5o04RH7FhVdzw2Q4.svg)](https://asciinema.org/a/JDRcvumHV5o04RH7FhVdzw2Q4)
