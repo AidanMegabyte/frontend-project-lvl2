@@ -5,34 +5,29 @@ import formatAsStylish from '../src/formatters/stylish.js';
 import formatAsPlain from '../src/formatters/plain.js';
 import formatAsJson from '../src/formatters/json.js';
 
-const checkFormat = async (diff, formatDiff, diffPath) => {
+const checkFormat = async (formatDiff, diffPath) => {
+  const diff = JSON.parse(await fsp.readFile(getFixturePath('formatters/diff.json'), 'utf-8'));
   const diffExpected = (await fsp.readFile(getFixturePath(diffPath), 'utf-8')).slice(0, -1);
   const diffActual = formatDiff(diff);
   expect(diffActual).toEqual(diffExpected);
 };
 
 test('Stylish formatting', async () => {
-  const diff = JSON.parse(await fsp.readFile(getFixturePath('formatters/diff.json'), 'utf-8'));
   await checkFormat(
-    diff,
     formatAsStylish,
     'formatters/diff-stylish.txt',
   );
 });
 
 test('Plain formatting', async () => {
-  const diff = JSON.parse(await fsp.readFile(getFixturePath('formatters/diff.json'), 'utf-8'));
   await checkFormat(
-    diff,
     formatAsPlain,
     'formatters/diff-plain.txt',
   );
 });
 
 test('JSON formatting', async () => {
-  const diff = JSON.parse(await fsp.readFile(getFixturePath('formatters/diff.json'), 'utf-8'));
   await checkFormat(
-    diff,
     formatAsJson,
     'formatters/diff-json.txt',
   );
