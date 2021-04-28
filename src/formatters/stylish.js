@@ -25,7 +25,7 @@ const formatValue = (value, padWidth) => {
   const result = [];
   const pad = ' '.repeat(padWidth + 2);
   const padEnd = ' '.repeat(padWidth - 2);
-  const keys = _.keys(value).sort();
+  const keys = _.sortBy(_.keys(value));
   keys.forEach((key) => {
     result.push(`${pad}${key}: ${formatValue(value[key], padWidth + 4)}`);
   });

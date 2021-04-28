@@ -8,7 +8,7 @@ import {
 
 export default function calcDiff(obj1, obj2) {
   const result = [];
-  const keys = _.uniq([..._.keys(obj1), ..._.keys(obj2)]).sort();
+  const keys = _.sortBy(_.uniq([..._.keys(obj1), ..._.keys(obj2)]));
   keys.forEach((key) => {
     const has1 = _.has(obj1, key);
     const value1 = _.get(obj1, key);
@@ -16,15 +16,15 @@ export default function calcDiff(obj1, obj2) {
     const value2 = _.get(obj2, key);
     const diff = { key, valueOld: value1, valueNew: value2 };
     if (has1 && !has2) {
-      diff.modified = modifiedDeleted;
+      _.set(diff, 'modified', modifiedDeleted);
     } else if (!has1 && has2) {
-      diff.modified = modifiedAdded;
+      _.set(diff, 'modified', modifiedAdded);
     } else if (_.isEqual(value1, value2)) {
-      diff.modified = modifiedNone;
+      _.set(diff, 'modified', modifiedNone);
     } else {
-      diff.modified = modifiedChanged;
+      _.set(diff, 'modified', modifiedChanged);
       if (_.isObject(value1) && _.isObject(value2)) {
-        diff.childDiff = calcDiff(value1, value2);
+        _.set(diff, 'childDiff', calcDiff(value1, value2));
       }
     }
     result.push(diff);

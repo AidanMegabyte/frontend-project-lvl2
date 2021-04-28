@@ -15,17 +15,19 @@ const formatValue = (value) => {
 };
 
 const formatValueChange = (fullPropName, modified, valueOld, valueNew) => {
-  let changeStr;
-  if (modified === modifiedDeleted) {
-    changeStr = 'removed';
-  } else if (modified === modifiedAdded) {
-    changeStr = `added with value: ${formatValue(valueNew)}`;
-  } else if (modified === modifiedChanged) {
-    changeStr = `updated. From ${formatValue(valueOld)} to ${formatValue(valueNew)}`;
-  } else {
-    return null;
+  if (modified === modifiedNone) {
+    return `Property '${fullPropName}' was not changed`;
   }
-  return `Property '${fullPropName}' was ${changeStr}`;
+  if (modified === modifiedDeleted) {
+    return `Property '${fullPropName}' was removed`;
+  }
+  if (modified === modifiedAdded) {
+    return `Property '${fullPropName}' was added with value: ${formatValue(valueNew)}`;
+  }
+  if (modified === modifiedChanged) {
+    return `Property '${fullPropName}' was updated. From ${formatValue(valueOld)} to ${formatValue(valueNew)}`;
+  }
+  return `Property '${fullPropName}' has unknown state`;
 };
 
 const formatDiffItem = (diffItem, parentProps = []) => {
