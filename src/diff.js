@@ -7,9 +7,8 @@ import {
 } from './common.js';
 
 export default function calcDiff(obj1, obj2) {
-  const result = [];
   const keys = _.sortBy(_.uniq([..._.keys(obj1), ..._.keys(obj2)]));
-  keys.forEach((key) => {
+  return keys.map((key) => {
     const has1 = _.has(obj1, key);
     const value1 = _.get(obj1, key);
     const has2 = _.has(obj2, key);
@@ -27,7 +26,6 @@ export default function calcDiff(obj1, obj2) {
         _.set(diff, 'childDiff', calcDiff(value1, value2));
       }
     }
-    result.push(diff);
+    return diff;
   });
-  return result;
 }

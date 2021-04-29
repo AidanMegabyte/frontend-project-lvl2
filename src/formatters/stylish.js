@@ -22,13 +22,10 @@ const formatValue = (value, padWidth) => {
   if (!_.isObject(value)) {
     return value;
   }
-  const result = [];
   const pad = ' '.repeat(padWidth + 2);
   const padEnd = ' '.repeat(padWidth - 2);
   const keys = _.sortBy(_.keys(value));
-  keys.forEach((key) => {
-    result.push(`${pad}${key}: ${formatValue(value[key], padWidth + 4)}`);
-  });
+  const result = keys.map((key) => `${pad}${key}: ${formatValue(value[key], padWidth + 4)}`);
   return ['{', ...result, `${padEnd}}`].join('\n');
 };
 
@@ -62,9 +59,8 @@ const formatDiffItem = (diffItem, padWidth, formatNestedDiff) => {
 
 export default function formatAsStylish(diff) {
   const iter = (curDiff, padWidth) => {
-    const result = [];
     const padEnd = ' '.repeat(padWidth - 2);
-    curDiff.forEach((d) => result.push(formatDiffItem(d, padWidth, iter)));
+    const result = curDiff.map((d) => formatDiffItem(d, padWidth, iter));
     return ['{', ...result, `${padEnd}}`].join('\n');
   };
   return iter(diff, 2);

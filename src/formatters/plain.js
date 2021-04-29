@@ -31,30 +31,25 @@ const formatValueChange = (fullPropName, modified, valueOld, valueNew) => {
 };
 
 const formatDiffItem = (diffItem, parentProps = []) => {
-  const result = [];
   const { modified } = diffItem;
-  if (modified !== modifiedNone) {
-    const {
-      key, valueOld, valueNew,
-    } = diffItem;
-    const fullPropName = [...parentProps, key].join('.');
-    if (!_.has(diffItem, 'childDiff')) {
-      const valueChange = formatValueChange(fullPropName, modified, valueOld, valueNew);
-      result.push(valueChange);
-    } else {
-      const childDiff = _.get(diffItem, 'childDiff');
-      const nestedParentProps = [...parentProps, key];
-      childDiff.forEach((childDiffItem) => {
-        const childResult = formatDiffItem(childDiffItem, nestedParentProps);
-        result.push(...childResult);
-      });
-    }
+  if (modified === modifiedNone) {
+    return null;
   }
-  return result;
+  const {
+    key, valueOld, valueNew,
+  } = diffItem;
+  const fullPropName = [...parentProps, key].join('.');
+  if (!_.has(diffItem, 'childDiff')) {
+    const valueChange = formatValueChange(fullPropName, modified, valueOld, valueNew);
+    return valueChange;
+  }
+  const childDiff = _.get(diffItem, 'childDiff');
+  const nestedParentProps = [...parentProps, key];
+  const result = childDiff.map((childDiffItem) => formatDiffItem(childDiffItem, nestedParentProps));
+  return _.flattenDeep(result);
 };
 
 export default function formatAsPlain(diff) {
-  const result = [];
-  diff.forEach((diffItem) => result.push(...formatDiffItem(diffItem)));
-  return result.join('\n');
+  const result = diff.map((diffItem) => formatDiffItem(diffItem));
+  return _.filter(_.flattenDeep(result), (o) => o).join('\n');
 }
